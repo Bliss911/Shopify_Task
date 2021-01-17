@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,24 +19,13 @@ class UserController extends Controller
     public function index()
     {
 //        $users = User::all();
+
         if (User::count() == 0){
             return \response([
                 'message' => 'This table is empty'
             ]);
         }
         return User::all();
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(UserRequest $request)
-    {
-        $user = User::create($request->only('name', 'email') + ['password' => Hash::make(1234)]);
-        return response($user, Response::HTTP_CREATED);
     }
 
     /**
